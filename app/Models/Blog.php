@@ -14,12 +14,11 @@ class Blog extends Model
 
     protected $table = 'blogs';
 
-    protected $fillable =
-        [
-          'title',
-          'name',
-          'image'
-        ];
+    protected $fillable = [
+        'title',
+        'name',
+        'image'
+    ];
 
     public function tags(): BelongsToMany
     {
