@@ -3,30 +3,26 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\BlogRequest;
+use App\Http\Resources\BlogResource;
 use App\Models\Blog;
 use App\Models\Tag;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class BlogController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
-        return Blog::all();
+        return response()->json([
+           'data' =>Blog::all(),
+        ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(BlogRequest $request, Blog $blog, Tag $tag)
+    public function store(BlogRequest $request, Tag $tag):JsonResponse
     {
-        Blog::create([
-            'title' => $request->title,
-            'name' => $request->name,
-            'image' => $request->image
-        ]);
+        $blog = Blog::query()
+            ->create($request->validated());
 
         $blog->tags()->attach($tag->id);
 
@@ -36,28 +32,12 @@ class BlogController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function show(string $id):JsonResponse
     {
-        return Blog::with('tags')->find($id);
-
+        return response()->json([
+            'data' =>Blog::with('tags')->findOrFail($id)
+        ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
 }

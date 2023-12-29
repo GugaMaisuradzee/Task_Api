@@ -20,11 +20,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('blogs',[BlogController::class,'index']);
+Route::controller(BlogController::class)->group(function (){
+    Route::get('blogs',[BlogController::class,'index']);
+    Route::get('blogs/{blogs}',[BlogController::class,'show']);
+    Route::post('blogs/store',[BlogController::class,'store']);
+});
 
-Route::get('blogs/{blogs}',[BlogController::class,'show']);
-
-Route::post('blogs/store',[BlogController::class,'store']);
-Route::post('tag/store',[TagController::class,'store']);
+Route::post('tag/store',[TagController::class, '__invoke']);
 
 
