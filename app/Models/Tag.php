@@ -2,11 +2,7 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use App\Models\Blog;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\{Factories\HasFactory, Model, Relations\BelongsToMany};
 
 class Tag extends Model
 {
@@ -14,10 +10,9 @@ class Tag extends Model
 
     protected $table = 'tags';
 
-    protected $fillable =
-        [
-            'name'
-        ];
+    protected $fillable = [
+        'name'
+    ];
 
     public function blogs(): BelongsToMany
     {
